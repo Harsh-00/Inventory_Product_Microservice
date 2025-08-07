@@ -14,7 +14,7 @@ load_dotenv()
 app=FastAPI() 
 
 
-origins = [f'{os.getenv("FRONT_URL_1")}', f'{os.getenv("FRONT_URL_2")}']
+origins = [f'{os.getenv("FRONT_URL")}',"http://localhost:5173","http://localhost:8001"]
 # origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
@@ -29,6 +29,9 @@ app.add_middleware(
 def read_root():
     return {"My":"Warehouse"}
 
+@app.get("/health")
+def health_check():
+    return {"status":"ok"}
 
 @app.post("/product")
 def create_product(product:Product):
